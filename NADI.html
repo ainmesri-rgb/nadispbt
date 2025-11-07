@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Responsive Webpage</title>
+    <style>
+        :root {
+            --primary-color: #0078D7;
+            --bg-color: #f4f6f8;
+            --text-color: #333;
+            --nav-bg: #0078D7;
+            --footer-bg: #333;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1e1e1e;
+            --text-color: #f4f4f4;
+            --nav-bg: #222;
+            --footer-bg: #111;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                background: var(--nav-bg);
+                position: absolute;
+                top: 60px;
+                right: 0;
+                width: 200px;
+                padding: 10px;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        .theme-toggle {
+            background: white;
+            color: var(--nav-bg);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        #home h1 {
+            margin-bottom: 20px;
+        }
+
+        input#searchWidgetTrigger {
+            width: 90%;
+            max-width: 400px;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin-top: 10px;
+            transition: box-shadow 0.3s;
+        }
+
+        input#searchWidgetTrigger:focus {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            outline: none;
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">NADI</div>
+        <span class="menu-toggle">&#9776;</span>
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+        </ul>
+        <button class="theme-toggle">Dark Mode</button>
+    </nav>
+
+    <section id="home">
+        <h1>Selamat Datang ke NADI</h1>
+        <p>Search using the widget below:</p>
+        <input placeholder="Search here" id="searchWidgetTrigger" />
+        <gen-search-widget
+            configId="8dde4340-c9d3-4358-96ba-46bc59765b2f"
+            triggerId="searchWidgetTrigger">
+        </gen-search-widget>
+    </section>
+
+    <section id="about">
+        <h2>About Us</h2>
+        <p>Navigasi Akta Dan Informasi (NADI) diwujudkan untuk membantu memudahkan pencarian maklumat berdasarkan Akta, UUK, pekeliling dan Garis Panduan yang diguna pakai di Selangor.</p>
+    </section>
+
+    <footer>
+        <p>&copy; AIN MESRI</p>
+    </footer>
+
+    <!-- Widget JavaScript bundle -->
+    <script src="https://cloud.google.com/ai/gen-app-builder/client?hl=en_US"></script>
+
+    <!-- Custom JS -->
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('nav ul');
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.textContent = 'Dark Mode';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = 'Light Mode';
+            }
+        });
+
+        // ✅ Set authorization token
+        const searchWidget = document.querySelector('gen-search-widget');
+        searchWidget.authToken = "ya29.a0ATi6K2sgqmBHGH8pR6mBL-dfGMQshoiTWLvkvqF6ZOGltO2zjK90ejEKdYsiFBwL1qdnFHJ4-10PZezf5A1nNy8v2-tbkCgtQ1VBym_S7N5frjnRdEMSXBi9sYVblmx7kPXpGuJsX5o8sVppzc6pN52HveBltueiebjC_IjQZ20s5e3jnCxbXUgZkhSy6_VAlKxJi4tMKS05aCgYKAWISARMSFQHGX2MiC5wsyw-L_LSuSQwnCnchGA0211";
+    </script>
+</body>
+</html>
